@@ -1,6 +1,8 @@
 const user = require('../user.js');
 //access to user.js from main_ctrl
 
+const skills = require('../skills.js');
+//access to skills.js from main_ctrl
 
 
 
@@ -90,8 +92,53 @@ const changeName = (req, res, next) => {
   res.status(200).json(user); // // could also be user.name
 }
 
+const updateLocation = (req, res, next) => {
+  user.location = req.body.location
+  res.status(200).json(user);
+}
+
+const addHobbies = (req, res, next) => {
+  user.hobbies.push(req.body)
+  res.status(200).json(user)
+}
+
+const addOccupations = (req, res, next) => {
+  user.occupations.push(req.body.occupations)
+  res.status(200).json(user);
+}
+
+const addFamily = (req, res, next) => {
+  //add to list of family members
+  user.family.push(req.body)
+  res.status(200).json(user)
+}
+
+const addRestaurant = (req, res, next) => {
+  //add to list of restaurants
+  user.restaurants.push(req.body)
+  res.status(200).json(user)
+}
 
 
+
+
+const getSkills = (req, res, next) => {
+  if (req.query.experience){
+      res.json({skills: skills.filter(skills => skills.experience === req.query.experience)});
+  }
+  res.json({skills: skills})
+}
+
+
+
+const addSkills = (req, res, next) => {
+  //add skill to collection ofskills
+let id = skills.length + 1
+req.body.id = id;
+  skills.push(req.body)
+  res.json({skills})
+
+}
 
 
 
@@ -109,5 +156,12 @@ getHobbiesType,
 getFamily,
 getRestaurants,
 getRestaurantsName,
-changeName
+changeName,
+updateLocation,
+addHobbies,
+addOccupations,
+addFamily,
+addRestaurant,
+getSkills,
+addSkills
 }
